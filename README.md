@@ -5,4 +5,7 @@ Create an Ansible inventory file from a Terraform state file.
 
 This tool was written so that Terraform can be used for only creating infrastructure and then Ansible for configuration management.
 
-TODO
+#### Example
+```
+tinventory --map=aws_instance.web:web aws_instance.web.1:db ./inventory
+```
