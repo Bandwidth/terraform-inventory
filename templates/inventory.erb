@@ -1,0 +1,6 @@
+<% for resource in @ungrouped_resources %><%= resource["public_ip"] %><% end %>
+<% for group_name, resources in @groups %>
+[<%= group_name %>]
+<% for resource in resources %><%= resource["public_ip"] %>
+<% end %>
+<% end %>
