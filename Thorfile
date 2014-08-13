@@ -24,12 +24,16 @@ class Default < Thor
 
   desc "rubocop", "Run Rubocop on all Ruby files"
   def rubocop
-    exec "rubocop"
+    say "Performing linting and style checking with rubocop...", :white
+    success = system "rubocop"
+    exit(!success) unless success
   end
 
   desc "spec", "Run tests."
   def spec
-    exec "rspec spec"
+    say "Running all rspec tests...", :white
+    success = system "rspec spec"
+    exit(!success) unless success
   end
 
   desc "check", "Lint, style, and test."
