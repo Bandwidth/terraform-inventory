@@ -29,3 +29,6 @@ Options:
   - --state=<path to state file> (optional)
     - Path to a Terraform state file.
     - Default: /home/tyler/Projects/terraform_inventory/terraform.tfstate
+
+#### License
+[MIT](LICENSE.md)
