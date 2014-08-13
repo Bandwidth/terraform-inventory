@@ -1,4 +1,4 @@
-terraform_inventory
+terraform_inventory [![Build Status](https://travis-ci.org/bandwidthcom/terraform-inventory.svg)](https://travis-ci.org/bandwidthcom/terraform-inventory)
 =========
 
 Create an Ansible inventory file from a Terraform state file.

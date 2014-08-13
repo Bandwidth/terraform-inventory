@@ -19,10 +19,11 @@ Gem::Specification.new do |spec|
   spec.files        += Dir.glob("bin/**/*")
   spec.files        += Dir.glob("lib/**/*.rb")
   spec.files        += Dir.glob("spec/**/*")
+  spec.files        += Dir.glob("templates/**/*")
 
   spec.test_files    = Dir.glob("spec/**/*")
 
-  spec.require_paths = %w[lib templates]
+  spec.require_paths = %w[lib]
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "thor"

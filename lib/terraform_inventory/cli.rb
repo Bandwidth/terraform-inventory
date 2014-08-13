@@ -5,7 +5,7 @@ module TerraformInventory
   class Cli < Thor
     include Thor::Actions
 
-    source_root("templates")
+    source_root(File.join(File.dirname(File.dirname(__dir__)), "templates"))
 
     desc "create", "Creates an Ansible inventory file from a Terraform state file"
     option :map, {
