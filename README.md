@@ -9,6 +9,9 @@ This mostly makes sense with the following resources since we are targetting Ans
 - [aws_instance](http://www.terraform.io/docs/providers/aws/r/instance.html)
 - [digitalocean_droplet](http://www.terraform.io/docs/providers/do/r/droplet.html) (not supported yet)
 
+#### Installation
+    gem install thor
+
 #### Example
 ```
 tinventory --map=aws_instance.web:web aws_instance.web.0:blog aws_instance.web.1:api ./inventory
