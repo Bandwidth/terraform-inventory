@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require "terraform_inventory/cli"
+TerraformInventory::Cli.start
