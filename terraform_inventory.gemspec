@@ -24,7 +24,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir.glob("spec/**/*")
 
   spec.require_paths = %w[lib]
+  
+  spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "thor"
 end

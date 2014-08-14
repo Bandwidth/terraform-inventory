@@ -49,7 +49,7 @@ module TerraformInventory
   private
 
     def parse_resource_selector(resource_selector)
-      resource_selector_regex = /^(\w+)\.(\w+)(?:\.(\d+))?$/
+      resource_selector_regex = /^(\w+)\.([\w@\-]+)(?:\.(\d+))?$/
       matches = resource_selector_regex.match(resource_selector)
 
       raise Exception::InvalidResourceSelectorException, resource_selector if matches.nil?
