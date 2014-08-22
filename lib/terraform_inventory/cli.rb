@@ -22,14 +22,20 @@ module TerraformInventory
     def create(inventory_path)
       state = TerraformState.new `terraform show -no-color #{options[:state]}`
 
-      @groups = state.group_by_host(options[:map])
-      @ungrouped_resources = @groups[:none] || []
-      @groups.delete(:none)
+      begin
+        @groups = state.group_by_host(options[:map])
+      rescue Exception::InvalidResourceSelectorException, Exception::ResourceNotFoundException => ex
+        say ex.message, :red
+        exit(1)
+      else
+        @ungrouped_resources = @groups[:none] || []
+        @groups.delete(:none)
 
-      template(
-        "inventory.erb",
-        inventory_path
-      )
+        template(
+          "inventory.erb",
+          inventory_path
+        )
+      end
     end
 
     default_task :create

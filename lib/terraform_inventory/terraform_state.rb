@@ -3,7 +3,7 @@ require "terraform_inventory/exception"
 
 module TerraformInventory
   class TerraformState
-    # Find a resource given a resource selector.
+    # Find resources given a resource selector.
     #
     # A resource selector is composed of the following:
     #   resource_type (ex. aws_instance)
@@ -14,10 +14,15 @@ module TerraformInventory
     #   aws_instance.web.1  -  selects a specific aws_instance resource named web
     #   aws_instance.web    -  selects all aws_instance resources named web
     #
-    def find_resource(resource_selector)
+    # Returns:
+    #   [ resource_data ]
+    #
+    def find_resources(resource_selector)
       resource_type, resource_name, resource_number = parse_resource_selector(resource_selector)
 
-      if resource_number
+      if @state[resource_type].nil? || @state[resource_type][resource_name].nil?
+        []
+      elsif resource_number
         [@state[resource_type][resource_name][resource_number]]
       else
         @state[resource_type][resource_name]
@@ -27,8 +32,11 @@ module TerraformInventory
     def group_by_host(resource_host_group_mapping)
       resource_host_group_mapping.reduce({}) do |data, (resource_selector, host_group)| # rubocop:disable Style/EachWithObject
         data[host_group.to_sym] ||= []
-        data[host_group.to_sym].concat find_resource(resource_selector)
+        resources = find_resources(resource_selector)
 
+        raise Exception::ResourceNotFoundException, resource_selector if resources.empty?
+
+        data[host_group.to_sym].concat resources
         data
       end
     end

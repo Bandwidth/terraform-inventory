@@ -1,4 +1,5 @@
 require "spec_helper"
+require "terraform_inventory/exception"
 
 # rubocop:disable Style/TrailingWhitespace
 terraform_show_output = %(
@@ -48,8 +49,20 @@ describe TerraformInventory::TerraformState do
   let(:state) { TerraformInventory::TerraformState.new terraform_show_output }
 
   describe "#find_resource" do
+    context "using an invalid resource_selector" do
+      it "throws a TerraformInventory::Exception::InvalidResourceSelectorException" do
+        begin
+          state.find_resources("aws_instance_invalid!!!!web")
+        rescue TerraformInventory::Exception::InvalidResourceSelectorException
+          next
+        else
+          raise "This should have raised a TerraformInventory::Exception::InvalidResourceSelectorException"
+        end
+      end
+    end
+
     context "using a resource_selector without resource_number" do
-      let(:resources) { state.find_resource("aws_instance.web") }
+      let(:resources) { state.find_resources("aws_instance.web") }
 
       it "returns the correct resources" do
         expect(resources.size).to eq(2)
@@ -59,23 +72,45 @@ describe TerraformInventory::TerraformState do
     end
 
     context "using a resource_selector with a resource_number" do
-      let(:resources) { state.find_resource("aws_instance.web.1") }
+      let(:resources) { state.find_resources("aws_instance.web.1") }
 
       it "returns the correct resources" do
         expect(resources.size).to eq(1)
         expect(resources.first["id"]).to eq("i-b69b2b9a")
       end
     end
+
+    context "using a resource_selector that won't be found" do
+      let(:resources) { state.find_resources("aws_instance.freeswitch") }
+
+      it "returns an empty array" do
+        expect(resources.size).to eq(0)
+      end
+    end
   end
 
   describe "#group_by_host" do
-    let(:groups) { state.group_by_host Hash["aws_instance.web", "web"] }
+    context "when a resource_selector is found" do
+      let(:groups) { state.group_by_host Hash["aws_instance.web", "web"] }
 
-    it "properly groups resources" do
-      expect(groups.keys.size).to eq(1)
-      expect(groups.keys.first).to eq(:web)
-      expect(groups[:web].first["id"]).to eq("i-1299293e")
-      expect(groups[:web][1]["id"]).to eq("i-b69b2b9a")
+      it "properly groups resources" do
+        expect(groups.keys.size).to eq(1)
+        expect(groups.keys.first).to eq(:web)
+        expect(groups[:web].first["id"]).to eq("i-1299293e")
+        expect(groups[:web][1]["id"]).to eq("i-b69b2b9a")
+      end
+    end
+
+    context "when a resource_selector isn't found" do
+      it "throws a TerraformInventory::Exception::ResourceNotFoundException" do
+        begin
+          state.group_by_host Hash["aws_instance.freeswitch", "freeswitch"]
+        rescue TerraformInventory::Exception::ResourceNotFoundException
+          next
+        else
+          raise "This should have raised a TerraformInventory::Exception::ResourceNotFoundException"
+        end
+      end
     end
   end
 end
