@@ -3,6 +3,10 @@ require "terraform_inventory/exception"
 
 module TerraformInventory
   class TerraformState
+    def resources
+      @state
+    end
+
     # Find resources given a resource selector.
     #
     # A resource selector is composed of the following:
