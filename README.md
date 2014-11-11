@@ -10,7 +10,7 @@ This mostly makes sense with the following resources since we are targetting Ans
 - [digitalocean_droplet](http://www.terraform.io/docs/providers/do/r/droplet.html) (not supported yet)
 
 #### Installation
-    gem install thor
+    gem install terraform_inventory
 
 #### Example
 ```
