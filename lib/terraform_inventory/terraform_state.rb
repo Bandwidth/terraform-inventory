@@ -3,9 +3,8 @@ require "terraform_inventory/exception"
 
 module TerraformInventory
   class TerraformState
-    def resources
-      @state
-    end
+    attr_reader :state
+    alias_method :resources, :state
 
     # Find resources given a resource selector.
     #

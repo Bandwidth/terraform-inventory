@@ -1,4 +1,4 @@
-terraform_inventory [![Build Status](https://travis-ci.org/bandwidthcom/terraform-inventory.svg)](https://travis-ci.org/bandwidthcom/terraform-inventory)
+terraform_inventory [![Build Status](https://travis-ci.org/bandwidthcom/terraform-inventory.svg?branch=master)](https://travis-ci.org/bandwidthcom/terraform-inventory)
 =========
 
 Create an Ansible inventory file from a Terraform state file.
@@ -31,7 +31,7 @@ Options:
     - The "none" host group puts the hosts IP address at the top of the file without a group
   - --state=<path to state file> (optional)
     - Path to a Terraform state file.
-    - Default: /home/tyler/Projects/terraform_inventory/terraform.tfstate
+    - Default: `File.join(Dir.pwd, "terraform.tfstate")`
 
 #### License
 [MIT](LICENSE.md)
