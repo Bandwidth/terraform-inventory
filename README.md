@@ -29,9 +29,12 @@ Options:
   - --map=resource_selector:host_group (required)
     - Maps between Terraform resource selector and Ansible host group.
     - The "none" host group puts the hosts IP address at the top of the file without a group
-  - --state=<path to state file> (optional)
+  - --state=< path to state file > (optional)
     - Path to a Terraform state file.
     - Default: `File.join(Dir.pwd, "terraform.tfstate")`
+  - --ip_type=< type >
+    - `public` or `private`
+    - Default: `public`
 
 #### License
 [MIT](LICENSE.md)
