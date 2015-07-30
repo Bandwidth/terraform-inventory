@@ -1,6 +1,6 @@
-<% for resource in @ungrouped_resources %><%= resource["public_ip"] %><% end %>
+<% for resource in @ungrouped_resources %><%= resource[config[:ip_type]] %><% end %>
 <% for group_name, resources in @groups %>
 [<%= group_name %>]
-<% for resource in resources %><%= resource["public_ip"] %>
+<% for resource in resources %><%= resource[config[:ip_type]] %>
 <% end %>
 <% end %>

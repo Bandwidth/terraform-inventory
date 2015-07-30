@@ -14,6 +14,11 @@ module TerraformInventory
       banner: "resource_selector:host_group",
       desc: "Maps between Terraform resource selector and Ansible host group."
     }
+    option :ip_type, {
+      banner: "public|private",
+      desc: "Whether to use the public or private ip address",
+      default: "public"
+    }
     option :state, {
       banner: "<path to state file>",
       desc: "Path to a Terraform state file.",
@@ -31,9 +36,14 @@ module TerraformInventory
         @ungrouped_resources = @groups[:none] || []
         @groups.delete(:none)
 
+        config = {
+            :ip_type => "#{options[:ip_type]}_ip"
+        }
+
         template(
           "inventory.erb",
-          inventory_path
+          inventory_path,
+          config
         )
       end
     end
