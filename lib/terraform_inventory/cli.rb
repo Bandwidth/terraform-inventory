@@ -37,14 +37,10 @@ module TerraformInventory
         @groups.delete(:none)
 
         config = {
-            :ip_type => "#{options[:ip_type]}_ip"
+          ip_type: "#{options[:ip_type]}_ip"
         }
 
-        template(
-          "inventory.erb",
-          inventory_path,
-          config
-        )
+        template("inventory.erb", inventory_path, config)
       end
     end
 
