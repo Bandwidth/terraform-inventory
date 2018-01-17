@@ -1,3 +1,5 @@
+# ⚠️ DEPRECATED⚠️ 
+
 terraform_inventory [![Build Status](https://travis-ci.org/bandwidthcom/terraform-inventory.svg?branch=master)](https://travis-ci.org/bandwidthcom/terraform-inventory)
 =========
 
